@@ -3,157 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soccee - Argentina vs Austria Match Center</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SOCCEE - Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nav-link, .sub-link {
+            transition: font-weight 0.2s ease, color 0.2s ease;
+        }
+        .nav-link:hover, .sub-link:hover {
+            font-weight: bold !important;
+        }
+        .top-active {
+            color: #facc15 !important;
+            font-weight: bold !important;
+        }
+        .lower-active {
+            color: #ef4444 !important;
+            font-weight: bold !important;
+            border-bottom: 2px solid #ef4444;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-white text-gray-900 min-h-screen font-sans">
 
-    <div class="match-center-container">
-        
-        <header class="match-header">
-            <div class="header-left">
-                <i class="fa-solid fa-arrow-left back-btn"></i>
-                <span class="match-title">Argentina vs Austria</span>
-            </div>
-            <i class="fa-solid fa-xmark close-btn"></i>
-        </header>
-
-        <section class="scoreboard-section">
-            <div class="tournament-meta">
-                <!-- NEW: এখানে একটি ছোট লাইভ আইকন বা ডট যোগ করা হয়েছে দেখতে সুন্দর লাগার জন্য -->
-                <span class="live-dot-icon"><i class="fa-solid fa-circle" style="color: #ff4d4d; font-size: 10px; margin-right: 4px;"></i></span>
-                
-                <span>FIFA World Cup 2026™ · Mon, Jun 22</span>
-                <span class="status-badge">Full-time</span>
-            </div>
-
-            <div class="score-display">
-                <div class="team-block">
-                    <div class="flag-wrapper">
-                        <div class="mock-flag arg-flag"></div>
-                    </div>
-                    <span class="team-name">Argentina</span>
+    <!-- ====================================================================== -->
+    <!-- SECTION 1: LOGIN / REGISTER DASHBOARD  -->
+    <!-- ====================================================================== -->
+    <div id="auth-section" class="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+        <div class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2 p-4 md:p-8 gap-8 border border-gray-100">
+            
+            <div class="flex flex-col justify-center px-4 md:px-12 py-6">
+                <div class="text-center mb-6">
+                    <div class="text-5xl font-black text-purple-600 tracking-wider mb-4">SOCCEE</div>
+                    <h2 id="auth-title" class="text-2xl font-bold text-gray-800">Welcome Back!</h2>
+                    <p id="auth-subtitle" class="text-sm text-gray-500 mt-1">Please Sign In to continue</p>
                 </div>
 
-                <div class="scores-center">
-                    <span class="score-digit">2</span>
-                    <span class="score-divider">-</span>
-                    <span class="score-digit">0</span>
-                </div>
+                <div id="auth-alert" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl font-semibold text-center"></div>
 
-                <div class="team-block">
-                    <div class="flag-wrapper">
-                        <div class="mock-flag aut-flag"></div>
-                    </div>
-                    <span class="team-name">Austria</span>
-                </div>
+                <form id="auth-form" class="space-y-4" novalidate>
+                    <div id="dynamic-inputs" class="space-y-4"></div>
+
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-md">
+                        Login
+                    </button>
+                </form>
+
+                <p class="text-center text-sm text-gray-500 mt-6" id="toggle-auth-container">
+                    Not a member? <a href="#" id="switch-to-register" class="text-purple-600 font-bold underline">Register Now</a>
+                </p>
             </div>
 
-            <!-- NEW: গ্রুপের তথ্যের সাথে খেলার ভেন্যু/স্টেডিয়ামের নাম শর্টকাটে যোগ করা হয়েছে -->
-            <div class="group-info">Group Stage · Group J · <i class="fa-solid fa-location-dot"></i> Lusail Stadium</div>
-
-            <div class="scorers-timeline">
-                <div class="scorers-left">
-                    <span>Lionel Messi 38', 90+5'</span>
-                </div>
-                <div class="timeline-center-icon">
-                    <i class="fa-solid fa-soccer-ball"></i>
-                </div>
-                <div class="scorers-right"></div>
+            <div class="hidden md:flex items-center justify-center bg-purple-50 rounded-2xl p-6">
+                <img src="https://illustrations.popsy.co/purple/searching-for-password.svg" id="custom-auth-img" class="w-4/5 h-auto object-contain" alt="Security Panel Vector">
             </div>
-
-            <div class="media-row">
-                <div class="media-card card-blue">
-                    <div class="media-overlay">
-                        <i class="fa-solid fa-circle-play play-icon"></i>
-                        <span class="video-label">Match recap · 2:14</span>
-                    </div>
-                </div>
-                <div class="media-card card-stadium">
-                    <div class="media-overlay">
-                        <i class="fa-solid fa-circle-play play-icon"></i>
-                        <span class="video-label">Match recap · 0:21</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <nav class="matrix-tabs">
-            <button class="tab-item">Timeline</button>
-            <button class="tab-item">Lineups</button>
-            <button class="tab-item active">Stats</button>
-        </nav>
-
-        <main class="stats-matrix">
-            <div class="stats-section-header">TEAM STATS</div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left fill-badge blue-bg">12</div>
-                <div class="stat-label">Shots</div>
-                <div class="stat-value text-right">6</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left fill-badge blue-border">3</div>
-                <div class="stat-label">Shots on target</div>
-                <div class="stat-value text-right">1</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left fill-badge blue-bg">54%</div>
-                <div class="stat-label">Possession</div>
-                <div class="stat-value text-right">46%</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left fill-badge blue-bg">539</div>
-                <div class="stat-label">Passes</div>
-                <div class="stat-value text-right">440</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">90%</div>
-                <div class="stat-label">Pass accuracy</div>
-                <div class="stat-value text-right">87%</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">13</div>
-                <div class="stat-label">Fouls</div>
-                <div class="stat-value text-right fill-badge red-bg">12</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">2</div>
-                <div class="stat-label">Yellow cards</div>
-                <div class="stat-value text-right">2</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">0</div>
-                <div class="stat-label">Red cards</div>
-                <div class="stat-value text-right">0</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">2</div>
-                <div class="stat-label">Offsides</div>
-                <div class="stat-value text-right fill-badge red-bg">0</div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat-value text-left">1</div>
-                <div class="stat-label">Corners</div>
-                <div class="stat-value text-right fill-badge red-bg">3</div>
-            </div>
-        </main>
-
-        <footer class="match-footer" style="text-align: center; padding: 15px; font-size: 12px; color: #888; border-top: 1px solid #222; margin-top: 20px;">
-            <p>Data provided by Soccee Metric Matrix Engine</p>
-        </footer>
-
+        </div>
     </div>
 
+
+    <!-- ====================================================================== -->
+    <!-- SECTION 2: MAIN WEBSITE VIEWPOINT  -->
+    <!-- ====================================================================== -->
+    <div id="main-viewport" class="hidden min-h-screen bg-white">
+        
+   
+        <header class="bg-black text-white">
+            <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between border-b border-gray-800">
+                <div class="text-3xl font-black tracking-wider text-white">SOCCEE</div>
+                <button id="logout-btn" class="bg-gray-900 hover:bg-gray-800 border border-gray-700 text-gray-300 text-xs font-bold px-4 py-2 rounded-xl transition">
+                    Logout
+                </button>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-3 flex space-x-8 text-xs font-bold uppercase tracking-widest overflow-x-auto scrollbar-none">
+                <button id="top-tab-matches" class="nav-link top-active whitespace-nowrap">Matches</button>
+                <button id="top-tab-table" class="nav-link whitespace-nowrap">Table</button>
+                <button id="top-tab-teams" class="nav-link whitespace-nowrap">All Team Information</button>
+                <button id="top-tab-more" class="nav-link whitespace-nowrap">More</button>
+            </div>
+        </header>
+
+        <div class="bg-gray-50 border-b border-gray-200 py-4">
+            <div class="max-w-7xl mx-auto px-4 flex items-center justify-between flex-wrap gap-2">
+                <span class="text-sm font-black text-gray-700 tracking-wider uppercase">A Scorecard Platform</span>
+                
+                <div id="tournament-stage-text" class="text-xs font-black bg-black text-white px-4 py-2 rounded-full uppercase tracking-wider">
+                    Quarter Final
+                </div>
+            </div>
+        </div>
+
+        <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+            
+            <section class="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 md:p-10 max-w-4xl mx-auto">
+                <div class="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">FIFA World Cup 2026 Match Feed</div>
+                <div class="grid grid-cols-3 items-center text-center">
+                    <!-- Team Home -->
+                    <div class="text-xl md:text-3xl font-black text-gray-800" id="live-team-a">Argentina</div>
+                    
+                    <!-- Live Goals Output Display -->
+                    <div class="flex flex-col items-center">
+                        <div class="text-4xl md:text-6xl font-black text-gray-900 tracking-tighter" id="live-goals-score">2 - 0</div>
+                        <span class="text-[10px] bg-red-100 text-red-600 font-bold tracking-widest px-2 py-0.5 rounded-full mt-2 animate-pulse">LIVE</span>
+                    </div>
+
+                    <!-- Team Away -->
+                    <div class="text-xl md:text-3xl font-black text-gray-800" id="live-team-b">Austria</div>
+                </div>
+
+                <!-- Scorers & Match Minute Lists (Positioned Under the Score) -->
+                <div class="mt-8 pt-6 border-t border-gray-100 grid grid-cols-2 gap-4 text-xs text-gray-500">
+                    <div id="live-scorers-team-a" class="text-left space-y-1 font-semibold pr-4 border-r border-gray-100">
+                    </div>
+                    <div id="live-scorers-team-b" class="text-right space-y-1 font-semibold pl-4">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lower Layout Tab Section Containers -->
+            <section class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden max-w-4xl mx-auto">
+                <div class="bg-gray-50 border-b border-gray-200 flex px-6 space-x-8 text-xs font-bold uppercase tracking-wider">
+                    <button id="green-tab-stats" class="sub-link lower-active py-4">Stats</button>
+                    <button id="green-tab-lineups" class="sub-link py-4">Lineups</button>
+                    <button id="green-tab-players" class="sub-link py-4">Player Information</button>
+                </div>
+
+                <div id="purple-dynamic-canvas" class="p-6 md:p-8 min-h-[250px]">
+                    <!-- Displayed Context templates run cleanly here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
