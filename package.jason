@@ -1,0 +1,17 @@
+{
+  "name": "soccee-platform",
+  "version": "1.0.0",
+  "description": "Soccer Live Feed and Authentication Portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
