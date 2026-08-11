@@ -1,0 +1,208 @@
+/* ==========================================================================
+   SOCCEE — styles.css
+   Custom rules that sit on top of Tailwind utility classes.
+   Tailwind handles layout/spacing; this file owns brand color, the
+   nav hover/active states, and the match-card visuals that Tailwind's
+   default utilities can't express cleanly.
+   ========================================================================== */
+
+:root {
+  --soccee-navy: #0d1b3e;      /* top bar background */
+  --soccee-black: #111111;     /* second nav bar background */
+  --soccee-red: #e21b1b;       /* click/active state for white-bg sections */
+  --soccee-yellow: #f5c518;    /* click/active state for the black nav bar */
+  --soccee-gray: #f5f6f7;      /* light section background (stats panel) */
+  --soccee-border: #e5e7eb;
+}
+
+html, body {
+  background: #ffffff;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+}
+
+/* ---------- Top bar (was "FIFA" wordmark row) ---------- */
+.soccee-topbar {
+  background: var(--soccee-navy);
+}
+
+.soccee-logo {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  font-size: 1.25rem;
+}
+
+/* ---------- Second bar: black background nav ---------- */
+.soccee-blackbar {
+  background: var(--soccee-black);
+}
+
+.soccee-blackbar .brand-tagline {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Nav items that live on the black bar (Matches / Table / Teams / More)
+   -> hover = bold, click/active = YELLOW font (per spec, this bar is the
+   one exception that turns yellow instead of red). */
+.nav-link-black {
+  color: #d1d5db;
+  transition: color 0.2s ease, font-weight 0.2s ease;
+  cursor: pointer;
+  padding: 0.5rem 0.25rem;
+}
+.nav-link-black:hover {
+  color: #ffffff;
+  font-weight: 700;
+}
+.nav-link-black.active {
+  color: var(--soccee-yellow);
+  font-weight: 700;
+}
+
+/* Every other clickable section label (tabs under the match card, footer
+   links, etc.) -> hover = bold, click/active = RED font. */
+.nav-link-red {
+  color: #374151;
+  transition: color 0.2s ease, font-weight 0.2s ease;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+}
+.nav-link-red:hover {
+  font-weight: 700;
+  color: #111111;
+}
+.nav-link-red.active {
+  color: var(--soccee-red);
+  font-weight: 700;
+}
+
+/* ---------- Stage badge (replaces the WC26 logo badge) ---------- */
+.stage-badge {
+  display: inline-block;
+  background: var(--soccee-black);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+}
+
+/* ---------- Match card (main focus — red-marked area) ---------- */
+.match-card {
+  border: 1px solid var(--soccee-border);
+  border-radius: 0.75rem;
+  background: #ffffff;
+}
+
+.team-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.team-flag {
+  width: 44px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--soccee-border);
+}
+
+.score-box {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #111111;
+}
+
+.scorers-list {
+  font-size: 0.8rem;
+  color: #4b5563;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.scorers-list .scorer-row {
+  white-space: nowrap;
+}
+
+/* ---------- Tab content panel (purple-marked area) ---------- */
+.tab-panel {
+  background: var(--soccee-gray);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.stat-row .stat-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+.stat-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: #d1d5db;
+  overflow: hidden;
+  display: flex;
+}
+
+.stat-bar-home { background: #111111; height: 100%; }
+.stat-bar-away { background: var(--soccee-red); height: 100%; }
+
+.player-card {
+  border: 1px solid var(--soccee-border);
+  border-radius: 0.6rem;
+  background: #ffffff;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+.player-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* ---------- Auth pages (login/register) ---------- */
+.auth-side-image {
+  background-size: cover;
+  background-position: center;
+  background-image: var(--auth-side-image, url('assets/login-side.jpg'));
+}
+
+.pw-meter-seg {
+  height: 4px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  flex: 1;
+}
+.pw-meter-seg.filled-weak { background: #e21b1b; }
+.pw-meter-seg.filled-fair { background: #f5c518; }
+.pw-meter-seg.filled-strong { background: #16a34a; }
+
+.field-error {
+  color: var(--soccee-red);
+  font-size: 0.78rem;
+  margin-top: 0.25rem;
+  min-height: 1rem;
+}
+
+.input-invalid {
+  border-color: var(--soccee-red) !important;
+}
+.input-valid {
+  border-color: #16a34a !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .score-box { font-size: 1.6rem; }
+  .team-flag { width: 32px; height: 22px; }
+  .soccee-blackbar .brand-tagline { font-size: 0.8rem; }
+}
