@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOCCEE — A Scorecard Platform</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white">
+
+  <!-- ============ ROW 1: Top bar ============ -->
+  <header class="soccee-topbar">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+      <a href="index.html" class="soccee-logo">SOCCEE</a>
+
+      <!-- Dynamic Auth Container -->
+      <div id="authContainer" class="relative inline-block text-left">
+        <a href="login.php" id="authBtn" class="bg-white text-[#0d1b3e] font-semibold text-sm px-4 py-1.5 rounded-full hover:bg-gray-100 transition inline-block">
+          Login / Register
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ ROW 2: Black bar — tagline + primary nav ============ -->
+  <nav class="soccee-blackbar">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-4 py-3 gap-2">
+      <div class="flex items-center gap-2">
+        <button aria-label="menu" class="text-white text-xl leading-none">&#9776;</button>
+        <span class="brand-tagline">A Scorecard Platform</span>
+      </div>
+      <ul class="flex items-center gap-5 text-sm">
+        <li class="nav-link-black active" data-nav="matches">Matches</li>
+        <li class="nav-link-black" data-nav="table">Table</li>
+        <li class="nav-link-black" data-nav="teams">Teams</li>
+        <li class="nav-link-black" data-nav="more">More</li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto px-4 py-8">
+
+    <!-- ============ Match selector ============ -->
+    <div class="flex items-center justify-between mb-4 text-sm text-gray-500">
+      <span id="matchMeta">Loading match…</span>
+      <select id="matchPicker" class="border border-gray-300 rounded px-2 py-1 text-sm"></select>
+    </div>
+
+    <!-- ============ Stage badge ============ -->
+    <div class="text-center mb-4">
+      <span class="stage-badge" id="stageBadge">Group Stage</span>
+    </div>
+
+    <!-- ============ MAIN FOCUS: match card ============ -->
+    <section class="match-card p-6 md:p-10 mb-6" id="matchCard">
+      <div class="flex items-center justify-between gap-4">
+        <div class="team-block">
+          <img class="team-flag" id="homeFlag" src="" alt="">
+          <div class="font-semibold text-sm md:text-base" id="homeName">—</div>
+          <div class="scorers-list" id="homeScorers"></div>
+        </div>
+
+        <div class="flex flex-col items-center gap-1">
+          <div class="score-box"><span id="homeGoals">0</span> - <span id="awayGoals">0</span></div>
+          <div class="text-xs text-gray-500" id="matchStatus">Full Time</div>
+        </div>
+
+        <div class="team-block">
+          <img class="team-flag" id="awayFlag" src="" alt="">
+          <div class="font-semibold text-sm md:text-base" id="awayName">—</div>
+          <div class="scorers-list" id="awayScorers"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Tabs ============ -->
+    <div class="flex items-center justify-center gap-2 mb-6" id="tabBar">
+      <span class="nav-link-red active" data-tab="stats">Stats</span>
+      <span class="nav-link-red" data-tab="lineups">Lineups</span>
+      <span class="nav-link-red" data-tab="players">Player Info</span>
+    </div>
+
+    <!-- ============ Tab content ============ -->
+    <section class="tab-panel" id="tabPanel">
+      <!-- filled by app.js -->
+    </section>
+
+  </main>
+
+  <footer class="border-t border-gray-200 mt-10 py-6 text-center text-xs text-gray-400">
+    SOCCEE — built for the FIFA World Cup 2026. Match data via openfootball / worldcup.json.
+  </footer>
+
+  <script src="app.js"></script>
+
+  <!-- Dynamic Session & Dropdown Controller -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('session_status.php?t=' + Date.now(), { credentials: 'same-origin' });
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          const authContainer = document.getElementById('authContainer');
+          
+          authContainer.innerHTML = `
+            <div class="relative inline-block text-left">
+              <button id="profileDropdownBtn" type="button" 
+                      class="bg-white text-[#0d1b3e] font-semibold text-sm px-4 py-1.5 rounded-full hover:bg-gray-100 transition flex items-center gap-2">
+                <span>Profile</span>
+                <svg class="w-4 h-4 text-[#0d1b3e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+
+              <div id="profileDropdownMenu" 
+                   class="hidden absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-xl py-2 z-50 text-gray-800 border border-gray-100">
+                <a href="dashboard.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">
+                  Personal Info
+                </a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="logout.php" class="block px-4 py-2 text-sm text-red-600 font-semibold hover:bg-red-50 transition">
+                  Log Out
+                </a>
+              </div>
+            </div>
+          `;
+
+          const btn = document.getElementById('profileDropdownBtn');
+          const menu = document.getElementById('profileDropdownMenu');
+
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+              menu.classList.add('hidden');
+            }
+          });
+        }
+      } catch (err) {
+        console.error('Session check failed:', err);
+      }
+    });
+  </script>
+</body>
+</html>
